@@ -1,5 +1,6 @@
 package com.example.pys.bndcrimeex;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class CrimeListFragment extends Fragment{
 
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder{
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView titleTextView;
         private TextView dateTextView;
@@ -53,9 +55,12 @@ public class CrimeListFragment extends Fragment{
         private Crime crime;
         public CrimeHolder(View itemView) {
             super(itemView);
+
             titleTextView = (TextView) itemView.findViewById(R.id.titleText);
             dateTextView = (TextView) itemView.findViewById(R.id.dataText);
             solveCheckbox = (CheckBox) itemView.findViewById(R.id.checkSolve);
+
+            itemView.setOnClickListener(this);
 
         }
 
@@ -64,6 +69,17 @@ public class CrimeListFragment extends Fragment{
             titleTextView.setText(crime.getTitle());
             dateTextView.setText(crime.getDate().toString());
             solveCheckbox.setChecked(crime.isSolved());
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            Toast.makeText(getActivity(),crime.getTitle()+"",Toast.LENGTH_LONG).show();
+
+            Intent intent = CrimeActivity.newIntent(getActivity(),crime.getId());
+            startActivity(intent);
         }
     }
 
