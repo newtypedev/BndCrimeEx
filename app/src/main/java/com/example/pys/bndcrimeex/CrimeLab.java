@@ -1,6 +1,7 @@
 package com.example.pys.bndcrimeex;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +25,23 @@ public class CrimeLab {
 
     private CrimeLab(Context context){
         crimes = new ArrayList<>();
-
-        for(int i=0;i<100;i++){
+        for(int i=0;i<3;i++){
             Crime crime = new Crime();
-            crime.setTitle("범죄"+i);
+            crime.setTitle("상담일지"+i);
             crime.setSolved(i%2 ==0 );
             crimes.add(crime);
         }
+    }
+    public void deleteItem(UUID id){
+
+        for(Crime crime:crimes){
+            if(crime.getId().equals(id)){
+                crimes.remove(crime);
+                Log.v("삭제",crimes.size()+"");
+                return;
+            }
+    }
+
     }
 
     public List<Crime> getCrimes(){
